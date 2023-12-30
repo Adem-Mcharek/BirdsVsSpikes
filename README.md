@@ -1,7 +1,7 @@
 # Project: BirdsVsSpikes
 
 This project is a simple game written in Python using the tkinter library for GUI and various other libraries such as time, random, and numpy.
-
+This project was made during the AJST camp summer of 2017
 ### Getting Started
 These instructions will help you run the game on your local machine.
 
