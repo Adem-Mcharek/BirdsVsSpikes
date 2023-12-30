@@ -1,21 +1,33 @@
 from tkinter import *
 import time
 import random
+from numpy import *
+
 
 
 
 # ----Global Variables----
 gamewidth = 500
 gameheight = 700
-waittime = 0.05
+waittime = 0.037
 BS = []
-
+CS = []
 
 
 def wait(t):  # function to make movement slower
     fin = time.time() + t
     while time.time() < fin:
         continue
+
+
+def _sum(CS):
+
+    sum = 0
+
+    for i in CS:
+        sum = sum + i
+
+    return (sum)
 
 
 class Bird:
@@ -28,7 +40,7 @@ class Bird:
         self.move = True
         self.initY = 480
         self.jumping = False
-        self.maxJump = self.initY - 100
+        self.maxJump = self.initY - 70
         self.startGame = False
         self.restart = False
         self.cookie_score = 0
@@ -47,6 +59,8 @@ class Bird:
         self.startGame = True
         if self.y == self.initY:
             self.jumping = True
+
+
 
     def restart(self, event=None):
         self.restart = True
@@ -240,7 +254,7 @@ while True:
                 leftspike = left_spike()
                 left_spikeList.append(leftspike)
                 left_spikeInCanvasList.append(c.create_image(leftspike.x, leftspike.y, image=leftspike.img))
-            if random.random() < 0.5:
+            if random.random() < 0.8:
                 leftspike = left_spike()
                 test = True
                 for lspike in left_spikeList:
@@ -255,7 +269,7 @@ while True:
                 rightspike = right_spike()
                 right_spikeList.append(rightspike)
                 right_spikeInCanvasList.append(c.create_image(rightspike.x, rightspike.y, image=rightspike.img))
-            if random.random() < 0.5:
+            if random.random() < 0.8:
                 rightspike = right_spike()
                 test = True
                 for rspike in right_spikeList:
@@ -295,13 +309,28 @@ while True:
 
 
             bird.update()
-
-
-
+            if score < 200:
+                c.configure(background='#33FFF9')
+            if score > 200 and score <  400 :
+                c.configure(background='#33ffad')
+            if score > 400 and score <  600 :
+                c.configure(background='#d6ff33')
+            if score > 600 and score <  800 :
+                c.configure(background='#ffad33')
 
             c.coords(birdingame, bird.x, bird.y)
         c.update()
         wait(waittime)
     BS.append(score)
+    CS.append(cookie_score)
     bs = max(BS)
-    finaltext = "            Game Over\n\n\n\n\n\n\n       your score "  + str(score) + "\nyou collected " +  str(cookie_score ) + "  candy \n       best score " +  str(bs)
+
+    #n = len(CS)
+
+
+
+
+    cs = _sum(CS)
+   # save('BS.npy', BS)
+   # save('CS.npy', CS)
+    finaltext = "            Game Over\n\n\n\n\n\n\n       your score "  + str(score) + "\n  you collected " +  str(cookie_score ) + "  candies \n       total of candies "   + str(cs) + " \n       best score " +  str(bs)
